@@ -104,4 +104,9 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Obstacle"))
             RespawnPlayer();
     }
+
+    private void OnDisable()
+    {
+        onGameOver -= RespawnPlayer;
+    }
 }
