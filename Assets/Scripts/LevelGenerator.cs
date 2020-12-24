@@ -8,8 +8,8 @@ using Random = UnityEngine.Random;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [SerializeField] private Transform levelContainer;
     [SerializeField] private List<Transform> platformsList;
+    [SerializeField] private Transform levelContainer;
     [SerializeField] private Transform finishPlatform;
     [SerializeField] private Transform obstacle;
     [SerializeField] private float yOffset = 2f;
@@ -20,13 +20,17 @@ public class LevelGenerator : MonoBehaviour
 
     private Vector3 lastEndPoint;
     private float[] yOffsetsArray;
+
+    private GameManager _gameManager;
     
     private void Awake()
     {
+        _gameManager = FindObjectOfType<GameManager>();
+        
         yOffsetsArray = new[] {0, yOffset, -yOffset};
         
         lastEndPoint = levelContainer.Find("EndPoint").position;
-        for (int i = 0; i < GameManager.instance.levelPlatsCount; i++)
+        for (int i = 0; i < _gameManager.levelPlatsCount; i++)
         {
             SpawnPlatform();
             switch (i)
@@ -70,7 +74,7 @@ public class LevelGenerator : MonoBehaviour
         platformTransform = Instantiate(randomPlatform, spawnPosition, Quaternion.identity);
         if (randomPlatform == platformsList[0])
         {
-            if (Random.Range(0, 100) < GameManager.instance.obstacleSpawnChance)
+            if (Random.Range(0, 100) < _gameManager.obstacleSpawnChance)
             {
                Transform obst = Instantiate(obstacle, platformTransform.GetChild(0).position, quaternion.identity);
                obst.SetParent(levelContainer);

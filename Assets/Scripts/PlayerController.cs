@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     private float timer = 0;
     public static event Action onGameOver;
     public static event Action onWin;
-    //private Action action;
     void Start()
     {
         onGameOver += RespawnPlayer;
